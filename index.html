@@ -4,6 +4,7 @@
 		<script src="js/reveal.js"></script>
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/moon.css">
+		<link rel="stylesheet" type="text/css" href="ppt-custom.css">
 	</head>
 	<body>
 		<div class="reveal">
@@ -28,6 +29,96 @@
 						<rect height="25" width="25" x="2"  y="28" fill="#05A6F0"/>
 						<rect height="25" width="25" x="28" y="28" fill="#FFBA08"/>
 						</svg>		
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### June 2017
+
+						<img src="images/cryptocurrency.jpg">
+					</textarea>
+				</section>
+				<section data-markdown data-background="#FFFFFF">
+					<textarea data-template>
+						<img src="images/blockchain.svg">
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Ether Price History
+
+						<img src="images/ether-price.png">
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Algorithm Overview
+
+						1. Analyze data for patterns
+						2. Create stationary timeseries dataframe
+						3. Normalization and feature selection
+						4. Split data into train and test
+						5. Test with multiple models (ARIMA, LSTM RNN, etc.)
+						6. Verify results
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Patterns In the Data
+
+						|   | Date       | Price  | eth\_tx | eth\_address | eth\_supply | ...|
+						| - | ---------- | ------ | ------- | ------------ | ----------- |----|
+						| 0 | 2017-12-18 | 785.99 | 984021  | 15048543     | 9.6364e7    |... |
+						| 1 | 2017-12-17 | 717.71 | 876574  | 14830225     | 9.6343e7    |... |
+						|...| ...        | ...    | ...     | ...          | ...         |... |
+						|289| 2017-3-1   | 77.53  | 112202  | 1663543      | 9.1228e7    |... |
+						
+						explain why chose may - dec [just put a chart] (before may it was flat so didnt need everything)
+						noticed that some numbers were very large or small (need normalization)
+						price tended to increase over time
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Create Stationary Timeseries Dataframe
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Normalization and Feature Selection
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Split Data into Train and Test
+
+						say number of train and test 
+						explain how it doesnt overfit
+						provide that term you forget the name for
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## LSTM RNN
+
+						explain what this is (might need another slide)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Verify Results
+
+						doesn't overfit because of train and test error curves
+						show chart of results
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Resources
+
+						Etherscan
+						github repo with my report
+						ml udacity class
 					</textarea>
 				</section>
 			</div>

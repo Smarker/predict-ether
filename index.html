@@ -2,14 +2,14 @@
 	<head>
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/moon.css">
-		<script src="plugin/markdown/marked.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section data-markdown data-background-image="images/bitcoin-exchange.jpg">
-					# Predict Ether Price with a LSTM RNN
+					<textarea data-template>
+						# Predict Ether Price with a LSTM RNN	
+					</textarea>
 				</section>
 				<section data-markdown>
 					<textarea data-template>
@@ -33,6 +33,10 @@
 		<script src="js/reveal.js"></script>
 		<script>
 			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				],
 				transition: 'none'
 			});
 		</script>

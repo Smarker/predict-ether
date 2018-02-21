@@ -7,17 +7,32 @@
 		<link rel="stylesheet" href="lib/css/darcula.css">
 		<link rel="stylesheet" href="css/theme/black.css">
 		<link rel="stylesheet" type="text/css" href="ppt-custom.css">
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
 				<section data-markdown data-background-image="images/bitcoin-exchange.jpg">
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						# Predict Ether Price with a LSTM RNN
+
+						Note:
+
+						* Introduce myself
+						* Interested in ML, udacity capstone
+						* Long-Short Term Memory Recurrent Neural Network
+						* Predict 7 days into future
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Stephanie Marker
 
 						> github.com/smarker
@@ -31,29 +46,45 @@
 						<rect height="25" width="25" x="2"  y="28" fill="#05A6F0"/>
 						<rect height="25" width="25" x="28" y="28" fill="#FFBA08"/>
 						</svg>		
+
+						Note:
+						* Code and writeup on github
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						### June 2017
 
 						<img src="images/cryptocurrency.jpg">
+
+						Note:
+						* How many have heard of bitcoin?
+						* How many have heard of ether?
+						* Bitcoin largest by market cap followed by Ether
+						</aside>
 					</textarea>
 				</section>
 				<section data-markdown data-background-color="#FFFFFF">
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						<img src="images/blockchain.svg">
+
+						Note:
+						* Blockchain relationship with ether
+						* Decentralized digital ledger of transactions.
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Ether Price History
 
 						<img src="images/ether-price.png">
+
+						Note:
+						* Looked at price May 1 - Mid December
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Algorithm Overview
 
 						1. Analyze data for patterns
@@ -62,10 +93,14 @@
 						4. Split data into train and test
 						5. Test with multiple models (LSTM RNN, etc.)
 						6. Verify results
+
+						Note:
+						* Works for any time series problem
+						* time series problem is time-dependent
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						<img src="images/ethPrice.png">
 
 						|   | Date       | Price  | eth\_tx | eth\_address | eth\_supply | ...|
@@ -74,10 +109,16 @@
 						| 1 | 2017-12-17 | 717.71 | 876574  | 14830225     | 9.6343e7    |... |
 						|...| ...        | ...    | ...     | ...          | ...         |... |
 						|289| 2017-3-1   | 77.53  | 112202  | 1663543      | 9.1228e7    |... |
+
+						Note:
+						* Patterns
+						* Values spread out (normalize)
+						* Price flat then trended up over time
+						* May 1 - Dec 18
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						### Feature Selection (Top 5 Features)
 						* Recursive Feature Elimination
 
@@ -92,10 +133,14 @@
 						rfe = RFE(RandomForestRegressor(n_estimators=500,random_state=1,5))
 						fit = rfe.fit(X, y)
 						```
+
+						Note:
+						* Select features by recursively selecting a smaller and smaller subset of features
+						* Least important features are removed
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Define Normalization Function
 
 						```
@@ -114,17 +159,27 @@
 							
 							return TRAIN_SCALED, TEST_SCALED, SCALER
 						```
+
+						Note:
+						* The following functions are helpers that I will call later when using LSTM RNN
+						* MinMaxScaler to scale feature values to a range (-1, 1)
+						* Returns a numpy array (convert back to dataframe)
+						* Necessary when values spread out so one feature doesn't outweigh another
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Example of [0, 1] Normalization
 
 						<img src="images/min_max.jpg">
+						
+						Note:
+						* Green is not normalized
+						* Triangles is normalized
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Define Stationizing (Differencing) Function
 						<img src="images/lstm-stationize.png">
 
@@ -140,10 +195,23 @@
 
 							return stationary_ts
 						```
+
+						Note:
+						* Time series must be stationary
+						* Stationary has constant mean, variance, autocorrelation
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
+						<img src="images/stationary.gif">
+
+						Note:
+						* Stationary vs Non Stationary
+						* Sometimes needs multiple time differencing to make stationary
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template data-separator-notes="^Note:">
 						## Train-Test Split
 
 						* Prevent Look-Ahead Bias
@@ -154,17 +222,26 @@
 							TEST = ts[-test_set_size:]
 							return TRAIN, TEST
 						```
+
+						Note:
+						* cannot make use future data in training
+						* using last 7 data points would introduce bias
 					</textarea>
 				</section>
 				<section data-markdown>
-						<textarea data-template>
+						<textarea data-template data-separator-notes="^Note:">
 							## testing with multiple models
 							
 							## a background on LSTM RNN
+
+							Note:
+							* Tested with multiple models (one was LSTM)
+							* How many are familiar with neural networks?
+							* Providing a background first
 						</textarea>
 					</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## Feed-Forward NN vs Recurrent NN
 						| Feed Forward   | Recurrent  |
 						| -------------- | ---------- |
@@ -172,27 +249,42 @@
 						| primarily for supervised learning  | supervised or unsupervised learning |
 						| data not sequential/time dependent | learn sequential data |
 						| no memory | memory |
+
+						Note:
+						* RNN part of LSTM
+						* Need loops to remember
 					</textarea>
 				</section>
 				<section data-markdown>
-						<textarea data-template>
+						<textarea data-template data-separator-notes="^Note:">
 							* Feed-Forward - 2D Input (samples, features)
 							* LSTM RNN - 3D Input (samples, timesteps, features)
 							<img src="images/feed-vs-rnn.jpg">
 
+							Notes:
+							* Remember 3d (important for lstm algorithm)
 						</textarea>
 					</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM RNN
 						
 						> Forget gate, Input gate, Output gate
 						
 						<img src="images/lstm-rnn.png">
+
+						Note:
+						* x = input, h = output
+						* RNN - keeps track of state - multiple copies of the same network, each passing a message to a the next
+						* Sigmas represent sigmoid f'n (outputs 0..1) (yellow) are the gates (layers)
+						* Forget gate: what state to discard
+						* Input gate: what new state to store
+						* Output gate: what state to output
+						* tanh push values between -1..1
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Apply Stationizing, Normalizing Functions
 						```		
 						def run_lstm(ts, len_test, epochs, batch_size, alpha, dropout): 
@@ -209,10 +301,14 @@
 							apply_minmax_scaling(STATIONARY_TRAIN,STATIONARY_TEST,FEATURES)
 							# ...
 							```
+
+						Note:
+						* Explained differencing and normalizing earlier
+						* Running lstm model passing in params (will explain params later)
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Reshape as 3d
 						```	
 						# ...	
@@ -230,10 +326,15 @@
 						fit_lstm_model(train_X, train_y, test_X, test_y, RAW, SCALER, \
 						FEATURES, epochs, batch_size, alpha, dropout)
 						```
+
+						Note:
+						* split into train test
+						* LSTM expects 3d data (features, values, time)
+						* Fit model
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Create Model, Configure Layers, Dropout
 						```	
 						def fit_lstm_model(train_X, train_y, test_X, test_y, RAW, \ 
@@ -249,18 +350,28 @@
 								model.add(Dense(1))
 								model.compile(loss='mae', optimizer='adam')
 						```
+
+						Note:
+						* epoch - one complete presentation of the data set to be learned to a model
+						* more epochs is better usually - watch out for overtraining (dropout to counter)
+						* will explain dropout in next slide
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: 0.5 Dropout
 
 						<img src="images/nn-dropout.png">
 
+						Note:
+						* Dropout can prevent overtraining
+						* randomly selected neurons are ignored during training
+						* good because other neurons step in and have to help with prediction
+						* 50% was recommended
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Fit Model, Make Prediction
 						```	
 						# Fit LSTM model
@@ -272,10 +383,13 @@
 						# make a prediction
 						model_output = model.predict(test_X)
 						```
+
+						Note:
+						* Fit, make prediction
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Reshape as 2d
 						```	
 						# reshape back to 2d
@@ -283,10 +397,13 @@
 						test_y = pd.DataFrame(test_y)
 						test_y.columns = ['Price']
 						```
+
+						Note:
+						* After making prediction, need to reshape to 2d (data was 2d originally)
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Invert Normalization, Stationizing (Differencing)
 
 						```
@@ -300,10 +417,13 @@
 							predictions[i], len(predictions) - i + 1 )
 							inverted.append(value)
 						```
+
+						Note:
+						* Invert scalling, differencing
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>
+					<textarea data-template data-separator-notes="^Note:">
 						## LSTM: Verify Results with other models
 						<img src="images/train-validation-error.png">
 
@@ -312,13 +432,22 @@
 						LSTM_actual = RAW[-TEST_SET_SIZE:]['Price']
 						LSTM_predicted = inverted
 						```
+
+						Note: 
+						* Training error should be lower than validation error (otherwise overfitting)
+						* Training error and validation error should eventually stabilize and become parallel
 					</textarea>
 				</section>
 				<section data-markdown>
-					<textarea data-template>						
+					<textarea data-template data-separator-notes="^Note:">						
 						> 4500 epochs, 32 batch size, 0.5 dropout
 
 						<img src="images/lstm-results.png">
+
+						Note:
+						* Want small batch size (number of samples propagated through network)
+						* The higher the batch size, the more memory you need
+						* 32 is around a month of data
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -338,6 +467,7 @@
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 				],
 				transition: 'none'

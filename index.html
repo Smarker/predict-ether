@@ -21,7 +21,7 @@
 			<div class="slides">
 				<section data-markdown data-background-image="images/bitcoin-exchange.jpg">
 					<textarea data-template data-separator-notes="^Note:">
-						# Predict Ether Price with a LSTM RNN
+						# Predict Ether Price with Univariate ARIMA and LSTM RNN
 
 						Note:
 
@@ -31,6 +31,7 @@
 						* Predict 7 days into future
 					</textarea>
 				</section>
+				<!--
 				<section data-markdown>
 					<textarea data-template data-separator-notes="^Note:">
 						## Stephanie Marker
@@ -73,6 +74,7 @@
 						* Decentralized digital ledger of transactions.
 					</textarea>
 				</section>
+				-->
 				<section data-markdown>
 					<textarea data-template data-separator-notes="^Note:">
 						## Ether Price History
@@ -87,12 +89,14 @@
 					<textarea data-template data-separator-notes="^Note:">
 						## Algorithm Overview
 
-						1. Analyze data for patterns
-						2. Feature Selection and Normalization
-						3. Create stationary timeseries dataframe
-						4. Split data into train and test
-						5. Test with multiple models (LSTM RNN, etc.)
-						6. Verify results
+						1. Extract and aggregate data from Etherscan and Github (Mar 2017 - Mid Dec 2017)
+						2. Create time-indexed timeseries df of ether data
+						3. Exploratory Data Analysis
+						4. Feature Selection and Normalization
+						5. Create stationary timeseries dataframe
+						6. Split data into train and test
+						7. Test with multiple models (ARIMA, LSTM RNN, etc.)
+						8. Verify results
 
 						Note:
 						* Works for any time series problem
